@@ -1,0 +1,46 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light py-4">
+          <h3 class="card-title mb-0 fw-semibold">
+            {{ editMode ? 'Edit Transaction' : 'Add Transaction' }}</h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="type" class="form-label">Type</label>
+              <select id="type" class="form-select" formControlName="type" (change)="onTypeChange()">
+                <option value="Expense">Expense</option>
+                <option value="Income">Income</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="category" class="form-label">Category</label>
+              <select id="category" class="form-select" formControlName="category">
+                <option [disabled]="true" [selected]="true">Select a category</option>
+                @for(category of availableCategories; track category){
+                  <option [value]="category">{{ category }}</option>
+                }
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="amount" class="form-label">Amount</label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input type="number" id="amount" class="form-control" formControlName="amount">
+              </div>
+            </div>
+            <div class="flex justify-content-end gap-3 mt-4">
+              <button type="button" class="btn btn-light" (click)="cancel()">Cancel</button>
+              <button type="submit" class="btn btn-primary"
+                      [disabled]="transactionForm.invalid">
+                {{ editMode ? 'Update' : 'Save' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+  </div>
+</div>
