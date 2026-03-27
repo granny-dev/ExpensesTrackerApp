@@ -6,4 +6,5 @@ public class User : BaseModel
 {
     public string Email {  get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
+    public ICollection<Transaction>? Transactions { get; set; }
 }

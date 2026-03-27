@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Transaction } from '../../models/transaction';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { TransactionService } from '../../services/transaction.service';
@@ -12,9 +12,10 @@ import { Router } from '@angular/router';
 })
 export class TransactionList implements OnInit {
   transactions: Transaction[] = [];
+  transactionService = inject(TransactionService);
+  cd = inject(ChangeDetectorRef);
 
   constructor(
-    private readonly transactionService: TransactionService,
     private readonly router: Router) {}
 
   ngOnInit() {
@@ -22,8 +23,14 @@ export class TransactionList implements OnInit {
   }
 
   private loadTransactions() {
-    this.transactionService.getAll().subscribe(transactions => {
-      this.transactions = transactions;
+    this.transactionService.getAll().subscribe({
+      next: (transactions) => {
+        this.transactions = transactions;
+        this.cd.markForCheck();
+      },
+      error: (err) => {
+        console.error('Error loading transactions:', err);
+      }
     });
   }
 
