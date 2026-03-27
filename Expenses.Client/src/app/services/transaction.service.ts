@@ -7,7 +7,8 @@ import { Transaction } from '../models/transaction';
   providedIn: 'root',
 })
 export class TransactionService {
-  private readonly apiUrl = 'https://localhost:7275/api/Transactions';
+  //private readonly apiUrl = 'https://localhost:7275/api/Transactions';
+  private readonly apiUrl = 'https://expensesserver.azurewebsites.net/api/Transactions';
 
   constructor(private readonly http: HttpClient) {}
 
